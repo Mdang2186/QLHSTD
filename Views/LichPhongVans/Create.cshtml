@@ -1,0 +1,78 @@
+﻿@model Nhom6_QLHoSoTuyenDung.Models.LichPhongVan
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Tạo lịch phỏng vấn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h3 class="mb-4">Tạo lịch phỏng vấn</h3>
+
+    <form asp-controller="LichPhongVans" asp-action="Create" method="post">
+        <div class="row g-3">
+
+            <!-- PHÒNG PHỎNG VẤN -->
+            <div class="col-md-6">
+                <label class="form-label">Phòng phỏng vấn (Tên - Địa điểm)</label>
+                <select asp-for="PhongPhongVanId" asp-items="ViewBag.PhongPhongVanList" class="form-select">
+                    <option value="">-- Chọn phòng --</option>
+                </select>
+            </div>
+
+            <!-- ỨNG VIÊN -->
+            <div class="col-md-6">
+                <label class="form-label">Ứng viên</label>
+                <select asp-for="UngVienId" asp-items="ViewBag.UngVienList" class="form-select">
+                    <option value="">-- Chọn ứng viên --</option>
+                </select>
+            </div>
+
+            <!-- VỊ TRÍ -->
+            <div class="col-md-6">
+                <label class="form-label">Vị trí tuyển dụng</label>
+                <select asp-for="ViTriId" asp-items="ViewBag.ViTriList" class="form-select">
+                    <option value="">-- Chọn vị trí --</option>
+                </select>
+            </div>
+
+            <!-- THỜI GIAN -->
+            <div class="col-md-6">
+                <label class="form-label">Thời gian</label>
+                <input asp-for="ThoiGian" type="datetime-local" class="form-control" />
+                <span asp-validation-for="ThoiGian" class="text-danger"></span>
+            </div>
+
+            <!-- GHI CHÚ -->
+            <div class="col-md-12">
+                <label class="form-label">Ghi chú</label>
+                <textarea asp-for="GhiChu" class="form-control" rows="3"></textarea>
+            </div>
+
+            <!-- NÚT -->
+            <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-primary">Lưu lịch</button>
+                <a asp-controller="UngViens" asp-action="Index" class="btn btn-secondary">Hủy</a>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var modelState in ViewData.ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            }
+        </ul>
+    </div>
+}
